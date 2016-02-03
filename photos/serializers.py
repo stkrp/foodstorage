@@ -3,7 +3,7 @@ from rest_framework import serializers
 from . import models
 
 
-class _PhotoSerializer(serializers.ModelSerializer):
+class _PhotoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Photo
         fields = '__all__'

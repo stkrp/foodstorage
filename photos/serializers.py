@@ -1,9 +1,12 @@
 from rest_framework import serializers
+from utils.serializers import CurrentUserDefaultSerializer
 
 from . import models
 
 
-class _PhotoSerializer(serializers.HyperlinkedModelSerializer):
+class _PhotoSerializer(
+    CurrentUserDefaultSerializer, serializers.HyperlinkedModelSerializer
+):
     avg_rating = serializers.SerializerMethodField()
 
     class Meta:

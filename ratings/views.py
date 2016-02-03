@@ -1,3 +1,27 @@
-from django.shortcuts import render
+from rest_framework.generics import (
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+)
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from utils.permissions import UserOwnerOrReadOnlyPermission
+from utils.views import StaffOrUserView
 
-# Create your views here.
+from . import models
+from . import serializers
+
+
+class _RatingAPIView(StaffOrUserView):
+    queryset = models.Rating.objects.all().select_related('user', 'photo')
+    staff_serializer = serializers.StaffRatingSerializer
+    user_serializer = serializers.UserRatingSerializer
+
+
+class RatingList(_RatingAPIView, ListCreateAPIView):
+    pass
+
+
+class RatingDetail(_RatingAPIView, RetrieveUpdateDestroyAPIView):
+    permission_classes = (
+        DjangoModelPermissionsOrAnonReadOnly,
+        UserOwnerOrReadOnlyPermission,
+        # TODO: Запретить оценивать собственные фото
+    )

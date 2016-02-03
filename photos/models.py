@@ -15,10 +15,9 @@ class Photo(TitleMixin, CreatedAtMixin, ModifiedAtMixin):
         ordering = ['-created_at']
 
     def fetch_avg_rating(self):
-        aggregate_dict = self.ratings.all().aggregate(
-            Round(models.Avg('value'), self._RATING_DECIMALS)
-        )
-        return aggregate_dict.get('value__avg', None)
+        return self.ratings.all().aggregate(
+            avg_rating=Round(models.Avg('value'), self._RATING_DECIMALS)
+        )['avg_rating']
 
     @property
     def avg_rating(self):

@@ -3,29 +3,20 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from utils.permissions import UserOwnerOrReadOnlyPermission
+from utils.views import StaffOrUserView
 
 from . import models
 from . import serializers
 
 
-class _PhotoAPIView(object):
+class _PhotoAPIView(StaffOrUserView):
     queryset = models.Photo.all_with_avg_rating()
-
-    def get_serializer_class(self):
-        if self.request.user.is_staff:
-            return serializers.StaffPhotoSerializer
-        return serializers.UserPhotoSerializer
+    staff_serializer = serializers.StaffPhotoSerializer
+    user_serializer = serializers.UserPhotoSerializer
 
 
 class PhotoList(_PhotoAPIView, ListCreateAPIView):
-    def perform_create(self, serializer):
-        request_user = self.request.user
-        serializer_user = serializer.validated_data.get('user', None)
-
-        if serializer_user is None:
-            serializer.save(request_user)
-        else:
-            serializer.save()
+    pass
 
 
 class PhotoDetail(_PhotoAPIView, RetrieveUpdateDestroyAPIView):

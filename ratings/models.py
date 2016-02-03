@@ -9,7 +9,6 @@ class Rating(CreatedAtMixin, ModifiedAtMixin):
     MIN_VALUE = 1
     MAX_VALUE = 10
 
-    # TODO: Проверить работоспособность валидаторов
     value = models.IntegerField(
         validators=[MinValueValidator(MIN_VALUE), MaxValueValidator(MAX_VALUE)]
     )

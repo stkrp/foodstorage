@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from utils.models import CreatedAtMixin, ModifiedAtMixin
+from utils.models.base import CreatedAtMixin, ModifiedAtMixin
 from users.models import User
 from photos.models import Photo
 

@@ -9,7 +9,7 @@ from . import serializers
 
 
 class _PhotoAPIView(object):
-    queryset = models.Photo.objects.all()
+    queryset = models.Photo.all_with_avg_rating()
 
     def get_serializer_class(self):
         if self.request.user.is_staff:

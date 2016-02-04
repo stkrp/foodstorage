@@ -8,7 +8,7 @@ from users.models import User
 class Photo(TitleMixin, CreatedAtMixin, ModifiedAtMixin):
     _RATING_DECIMALS = 0
 
-    file = models.CharField(max_length=255)  # models.ImageField()
+    file = models.ImageField()
     user = models.ForeignKey(User, related_name='photos')
 
     class Meta:

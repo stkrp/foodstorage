@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from ratings.views import PhotoRatingList
+from users.views import PhotoRatingUserList
 
 from . import views
 
@@ -12,5 +13,11 @@ urlpatterns = [
         r'^(?P<photo>\d+)/ratings/$',
         PhotoRatingList.as_view(),
         name='photo-rating-list'
+    ),
+
+    url(
+        r'^(?P<photo>\d+)/ratings/users/$',
+        PhotoRatingUserList.as_view(),
+        name='photo-rating-user-list'
     )
 ]

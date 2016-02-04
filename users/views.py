@@ -1,9 +1,10 @@
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+    ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from lib.permissions import UserOwnerOrReadOnlyPermission
 from lib.views.base import StaffOrUserView
+from photos.filters import PhotoRatingFilter
 
 from . import models
 from . import serializers
@@ -25,3 +26,8 @@ class UserDetail(_UserAPIView, RetrieveUpdateDestroyAPIView):
     permission_classes = _UserAPIView.permissions_classes + (
         UserOwnerOrReadOnlyPermission,
     )
+
+
+class PhotoRatingUserList(_UserAPIView, ListAPIView):
+    """ Список пользователей, оценивших фотографию """
+    filter_backends = (PhotoRatingFilter,)

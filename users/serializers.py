@@ -3,8 +3,17 @@ from rest_framework import serializers
 from . import models
 
 
-class UserSerializer(serializers.ModelSerializer):  # HyperlinkedModelSerializer
+class _UserSerializer(serializers.HyperlinkedModelSerializer):
     # FIXME: Отсутствует хэширование пароля
     class Meta:
         model = models.User
-        fields = '__all__'  # ('username', 'first_name', 'last_name')
+        # fields = '__all__'
+        fields = ('url', 'username', 'email', 'first_name', 'last_name',)
+
+
+class StaffUserSerializer(_UserSerializer):
+    pass
+
+
+class UserUserSerializer(_UserSerializer):
+    pass

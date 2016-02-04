@@ -13,6 +13,7 @@ class _PhotoAPIView(StaffOrUserView):
     queryset = models.Photo.all_with_avg_rating()
     staff_serializer = serializers.StaffPhotoSerializer
     user_serializer = serializers.UserPhotoSerializer
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly, )
 
 
 class PhotoList(_PhotoAPIView, ListCreateAPIView):
@@ -20,7 +21,6 @@ class PhotoList(_PhotoAPIView, ListCreateAPIView):
 
 
 class PhotoDetail(_PhotoAPIView, RetrieveUpdateDestroyAPIView):
-    permission_classes = (
-        DjangoModelPermissionsOrAnonReadOnly,
-        UserOwnerOrReadOnlyPermission
+    permission_classes = _PhotoAPIView.permission_classes + (
+        UserOwnerOrReadOnlyPermission,
     )

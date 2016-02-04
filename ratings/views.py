@@ -13,6 +13,7 @@ class _RatingAPIView(StaffOrUserView):
     queryset = models.Rating.objects.all().select_related('user', 'photo')
     staff_serializer = serializers.StaffRatingSerializer
     user_serializer = serializers.UserRatingSerializer
+    permissions_classes = (DjangoModelPermissionsOrAnonReadOnly, )
 
 
 class RatingList(_RatingAPIView, ListCreateAPIView):
@@ -20,8 +21,6 @@ class RatingList(_RatingAPIView, ListCreateAPIView):
 
 
 class RatingDetail(_RatingAPIView, RetrieveUpdateDestroyAPIView):
-    permission_classes = (
-        DjangoModelPermissionsOrAnonReadOnly,
+    permission_classes = _RatingAPIView.permissions_classes + (
         UserOwnerOrReadOnlyPermission,
-        # TODO: Запретить оценивать собственные фото
     )

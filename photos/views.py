@@ -2,7 +2,7 @@ from rest_framework.generics import (
     ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from users.filters import UserFilter
+from users.filters import UserFilter, UserRatingFilter
 from lib.permissions import UserOwnerOrReadOnlyPermission
 from lib.views.base import StaffOrUserView
 
@@ -27,14 +27,11 @@ class PhotoDetail(_PhotoAPIView, RetrieveUpdateDestroyAPIView):
     )
 
 
-class _UserPhotoAPIView(_PhotoAPIView):
+class UserPhotoList(_PhotoAPIView, ListAPIView):
+    """ Список фотографий пользователя """
     filter_backends = (UserFilter, )
 
 
-class UserPhotoList(_UserPhotoAPIView, ListAPIView):
-    """ Список фотографий пользователя """
-    pass
-
-
-# class UserRatingPhotoList(_PhotoAPIView, ListAPIView):
-#     queryset = models.Photo.objects.filter(ratings__user=fu)
+class UserRatingPhotoList(_PhotoAPIView, ListAPIView):
+    """ Список фотографий, оцененных пользователем """
+    filter_backends = (UserRatingFilter, )

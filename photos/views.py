@@ -2,9 +2,9 @@ from rest_framework.generics import (
     ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from utils.permissions import UserOwnerOrReadOnlyPermission
-from utils.views import StaffOrUserView
 from users.filters import UserFilter
+from lib.permissions import UserOwnerOrReadOnlyPermission
+from lib.views.base import StaffOrUserView
 
 from . import models
 from . import serializers
@@ -34,3 +34,7 @@ class _UserPhotoAPIView(_PhotoAPIView):
 class UserPhotoList(_UserPhotoAPIView, ListAPIView):
     """ Список фотографий пользователя """
     pass
+
+
+# class UserRatingPhotoList(_PhotoAPIView, ListAPIView):
+#     queryset = models.Photo.objects.filter(ratings__user=fu)

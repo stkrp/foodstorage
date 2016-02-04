@@ -1,16 +1,12 @@
 from rest_framework.filters import BaseFilterBackend
-from rest_framework.exceptions import NotFound
+from lib.views.utils import model_instance_by_view_kwarg
 
 from .models import User
 
 
 class UserFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        if 'user' not in view.kwargs:
+        user = model_instance_by_view_kwarg(view, 'user', User)
+        if user is None:
             return queryset
-        user_pk = view.kwargs['user']
-        try:
-            user = User.objects.get(pk=user_pk)
-        except User.DoesNotExist:
-            raise NotFound(detail='User with pk={} not found.'.format(user_pk))
         return queryset.filter(user=user)

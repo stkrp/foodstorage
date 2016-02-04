@@ -2,8 +2,8 @@ from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from utils.permissions import UserOwnerOrReadOnlyPermission
-from utils.views import StaffOrUserView
+from lib.permissions import UserOwnerOrReadOnlyPermission
+from lib.views.base import StaffOrUserView
 
 from . import models
 from . import serializers

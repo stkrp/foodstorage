@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import Prefetch
-from utils.models.base import TitleMixin, CreatedAtMixin, ModifiedAtMixin
-from utils.models.expressions import Round
+from lib.models.base import TitleMixin, CreatedAtMixin, ModifiedAtMixin
+from lib.models.expressions import Round
 from users.models import User
 
 

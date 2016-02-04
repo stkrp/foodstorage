@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from utils.serializers import CurrentUserDefaultSerializer
+from lib.serializers import CurrentUserDefaultSerializer
 
 from . import models
 

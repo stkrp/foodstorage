@@ -11,7 +11,7 @@ Utils: `sudo apt-get install httpie`
 ### Login
 
 ```
-http -f POST http://127.0.0.1:8000/api-token-auth/ username="test" password="123qweRTY"
+http -f POST http://127.0.0.1:8000/auth/ username="test" password="123qweRTY"
 ```
 
 

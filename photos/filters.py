@@ -7,14 +7,15 @@ from .models import Photo
 class PhotoFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         photo = model_instance_by_view_kwarg(view, 'photo', Photo)
-        if photo is None:
-            return queryset
         return queryset.filter(photo=photo)
 
 
 class PhotoRatingFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
+        """
+        Выбирает все записи, которые оценивали фото
+
+        Например, выбирает всех пользователей, которые оценивали фото.
+        """
         photo = model_instance_by_view_kwarg(view, 'photo', Photo)
-        if photo is None:
-            return queryset
         return queryset.filter(ratings__photo=photo)

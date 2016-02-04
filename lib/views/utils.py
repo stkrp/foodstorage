@@ -23,8 +23,6 @@ def model_instance_by_view_kwarg(view, pk_view_kwarg, model):
     :return:
     :rtype: model or NoneType
     """
-    if pk_view_kwarg not in view.kwargs:
-        return None
     pk = view.kwargs[pk_view_kwarg]
     try:
         obj = model.objects.get(pk=pk)

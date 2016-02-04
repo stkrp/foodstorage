@@ -16,3 +16,10 @@ class UserRatingFilter(BaseFilterBackend):
         """ Выбирает все записи, которые оценил пользователь """
         user = model_instance_by_view_kwarg(view, 'user', User)
         return queryset.filter(ratings__user=user)
+
+
+class UserPhotoFilter(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        """ Выбирает все записи, в фотографии принадлежат пользователю """
+        user = model_instance_by_view_kwarg(view, 'user', User)
+        return queryset.filter(photo__user=user)

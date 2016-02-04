@@ -4,7 +4,7 @@ from rest_framework.generics import (
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from lib.permissions import UserOwnerOrReadOnlyPermission
 from lib.views.base import StaffOrUserView
-from users.filters import UserFilter
+from users.filters import UserFilter, UserPhotoFilter
 from photos.filters import PhotoFilter
 
 from . import models
@@ -36,3 +36,8 @@ class UserRatingList(_RatingAPIView, ListAPIView):
 class PhotoRatingList(_RatingAPIView, ListAPIView):
     """ Список оценок фотографии """
     filter_backends = (PhotoFilter, )
+
+
+class UserPhotoRatingList(_RatingAPIView, ListAPIView):
+    """ Список оценок фотографий пользователя """
+    filter_backends = (UserPhotoFilter, )

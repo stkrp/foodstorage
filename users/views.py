@@ -14,6 +14,7 @@ class _UserAPIView(StaffOrUserView):
     staff_serializer = serializers.StaffUserSerializer
     user_serializer = serializers.UserUserSerializer
     permissions_classes = (DjangoModelPermissionsOrAnonReadOnly, )
+    # TODO: Добавить ссылку на страницу с фотографиями пользователя
 
 
 class UserList(_UserAPIView, ListCreateAPIView):

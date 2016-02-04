@@ -1,5 +1,5 @@
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+    ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 )
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from utils.permissions import UserOwnerOrReadOnlyPermission
@@ -15,7 +15,6 @@ class _PhotoAPIView(StaffOrUserView):
     staff_serializer = serializers.StaffPhotoSerializer
     user_serializer = serializers.UserPhotoSerializer
     permission_classes = (DjangoModelPermissionsOrAnonReadOnly, )
-    filter_backends = (UserFilter, )
 
 
 class PhotoList(_PhotoAPIView, ListCreateAPIView):
@@ -27,4 +26,11 @@ class PhotoDetail(_PhotoAPIView, RetrieveUpdateDestroyAPIView):
         UserOwnerOrReadOnlyPermission,
     )
 
-# TODO: Сделать режим "только чтение" для /users/:id/photos/*
+
+class _UserPhotoAPIView(_PhotoAPIView):
+    filter_backends = (UserFilter, )
+
+
+class UserPhotoList(_UserPhotoAPIView, ListAPIView):
+    """ Список фотографий пользователя """
+    pass

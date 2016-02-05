@@ -1,2 +1,7 @@
+# Superuser
 login:    root
 password: 80189D391
+
+# Test user
+login:    test
+password: 123qweRTY

@@ -8,6 +8,8 @@ Docs: [[http://www.django-rest-framework.org/api-guide/authentication/]]
 
 Utils: `sudo apt-get install httpie`
 
+Access: auth.txt
+
 ### Login
 
 ```

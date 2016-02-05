@@ -10,10 +10,34 @@ Utils: `sudo apt-get install httpie`
 
 Access: auth.txt
 
+### Register
+
+```
+http -f POST http://127.0.0.1:8000/users/ username="test2" password="123"
+```
+
+```
+HTTP/1.0 201 Created
+Allow: GET, POST, HEAD, OPTIONS
+Content-Type: application/json
+Date: Fri, 05 Feb 2016 11:34:45 GMT
+Location: http://127.0.0.1:8002/users/5/
+Server: WSGIServer/0.2 CPython/3.4.3+
+Vary: Accept, Cookie
+X-Frame-Options: SAMEORIGIN
+{
+    "email": "", 
+    "first_name": "", 
+    "last_name": "", 
+    "url": "http://127.0.0.1:8002/users/5/", 
+    "username": "test2"
+}
+```
+
 ### Login
 
 ```
-http -f POST http://127.0.0.1:8000/api-token-auth/ username="test" password="123qweRTY"
+http -f POST http://127.0.0.1:8000/auth/ username="test" password="123qweRTY"
 ```
 
 

@@ -1,4 +1,5 @@
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, MethodNotAllowed
+from rest_framework.permissions import SAFE_METHODS
 
 
 def model_instance_by_view_kwarg(view, pk_view_kwarg, model):
@@ -33,3 +34,17 @@ def model_instance_by_view_kwarg(view, pk_view_kwarg, model):
             )
         )
     return obj
+
+
+def get_action_type(request):
+    method = request.method
+    if method in SAFE_METHODS:
+        return 'view'
+    elif method == 'POST':
+        return 'create'
+    elif method == 'DELETE':
+        return 'delete'
+    elif method in ('PUT', 'PATCH'):
+        return 'update'
+    else:
+        raise MethodNotAllowed(method)

@@ -1,22 +1,44 @@
 from rest_framework import serializers
-from rest_framework import permissions
 from django.contrib.auth.hashers import make_password
 
 from . import models
 
 
-# TODO: Перечитать
 class _UserSerializer(serializers.HyperlinkedModelSerializer):
+    # TODO: Добавить валидацию поля "password"
     class Meta:
         model = models.User
+
+
+class _StaffUserSerializer(_UserSerializer):
+    class Meta(_UserSerializer.Meta):
+        exclude = ('user_permissions', )
+
+
+class _UserUserSerializer(_UserSerializer):
+    class Meta(_UserSerializer.Meta):
+        fields = (
+            'url', 'username', 'email', 'first_name', 'last_name',
+            'password'
+        )
+
+
+class _CreateUserSerializerMixin(object):
+    class Meta:
         extra_kwargs = {
-            'password': {'write_only': True, 'required': False}
+            'password': {'write_only': True}
         }
-        # http://www.django-rest-framework.org/api-guide/permissions/#allowany
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)
+
+
+class _UpdateUserSerializerMixin(object):
+    class Meta:
+        extra_kwargs = {
+            'password': {'write_only': True, 'required': False}
+        }
 
     def update(self, user, validated_data):
         password = validated_data.pop('password', None)
@@ -25,15 +47,29 @@ class _UserSerializer(serializers.HyperlinkedModelSerializer):
         return super().update(user, validated_data)
 
 
-class StaffUserSerializer(_UserSerializer):
-    class Meta(_UserSerializer.Meta):
-        exclude = ('user_permissions', )
+class CreateUserStaffSerializer(
+    _CreateUserSerializerMixin, _StaffUserSerializer
+):
+    class Meta(_CreateUserSerializerMixin.Meta, _StaffUserSerializer.Meta):
+        pass
 
 
-class UserUserSerializer(_UserSerializer):
-    class Meta(_UserSerializer.Meta):
-        fields = (
-            'url', 'username', 'email', 'first_name', 'last_name',
-            'password'
-        )
-        permission_classes = (permissions.AllowAny, )
+class UpdateUserStaffSerializer(
+    _UpdateUserSerializerMixin, _StaffUserSerializer
+):
+    class Meta(_UpdateUserSerializerMixin.Meta, _StaffUserSerializer.Meta):
+        pass
+
+
+class CreateUserUserSerializer(
+    _CreateUserSerializerMixin, _UserUserSerializer
+):
+    class Meta(_CreateUserSerializerMixin.Meta, _UserUserSerializer.Meta):
+        pass
+
+
+class UpdateUserUserSerializer(
+    _UpdateUserSerializerMixin, _UserUserSerializer
+):
+    class Meta(_UpdateUserSerializerMixin.Meta, _UserUserSerializer.Meta):
+        pass

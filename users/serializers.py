@@ -53,7 +53,7 @@ class _UserUserSerializer(_UserSerializer):
     class Meta(_UserSerializer.Meta):
         fields = (
             'url', 'username', 'email', 'first_name', 'last_name',
-            'password'
+            'password', 'photos', 'photos_ratings', 'ratings', 'ratings_photos'
         )
 
 

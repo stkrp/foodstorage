@@ -19,12 +19,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework.authtoken import views
 
+from .views import IndexAPI
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^auth/', views.obtain_auth_token),
+    url(r'^auth/', views.obtain_auth_token, name='auth'),
 
+    url(r'^$', IndexAPI.as_view(), name='index'),
     url(r'^users/', include('users.urls')),
     url(r'^photos/', include('photos.urls')),
     url(r'^ratings/', include('ratings.urls')),

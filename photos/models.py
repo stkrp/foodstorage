@@ -8,6 +8,8 @@ from users.models import User
 class Photo(TitleMixin, CreatedAtMixin, ModifiedAtMixin):
     _RATING_DECIMALS = 0
 
+    # TODO: Добавить удаление файла при удалении записи из БД
+    # Не забыть про пакетное удаление, которое не вызывает метод "delete"
     file = models.ImageField()
     user = models.ForeignKey(User, related_name='photos')
 

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 from django.contrib.auth.hashers import make_password
 
 from . import models
@@ -6,8 +7,41 @@ from . import models
 
 class _UserSerializer(serializers.HyperlinkedModelSerializer):
     # TODO: Добавить валидацию поля "password"
+    photos = serializers.SerializerMethodField()
+    photos_ratings = serializers.SerializerMethodField()
+    ratings = serializers.SerializerMethodField()
+    ratings_photos = serializers.SerializerMethodField()
+
     class Meta:
         model = models.User
+
+    def get_photos(self, obj):
+        return reverse(
+            'user-photo-list',
+            kwargs={'user': obj.pk},
+            request=self.context.get('request')
+        )
+
+    def get_photos_ratings(self, obj):
+        return reverse(
+            'user-photo-rating-list',
+            kwargs={'user': obj.pk},
+            request=self.context.get('request')
+        )
+
+    def get_ratings(self, obj):
+        return reverse(
+            'user-rating-list',
+            kwargs={'user': obj.pk},
+            request=self.context.get('request')
+        )
+
+    def get_ratings_photos(self, obj):
+        return reverse(
+            'user-rating-photo-list',
+            kwargs={'user': obj.pk},
+            request=self.context.get('request')
+        )
 
 
 class _StaffUserSerializer(_UserSerializer):

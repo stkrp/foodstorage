@@ -12,7 +12,7 @@ class _UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class _StaffUserSerializer(_UserSerializer):
     class Meta(_UserSerializer.Meta):
-        exclude = ('user_permissions', )
+        exclude = ('user_permissions', 'groups')
 
 
 class _UserUserSerializer(_UserSerializer):
